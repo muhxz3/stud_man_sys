@@ -25,24 +25,47 @@ async function populateCourseDropdown() {
 }
 
 async function renderStudents(isSearch = false) {
-    // FIX: Changed 'search-input' to 'filter-input' to match the ID used in the HTML pages.
-    // The search input element might not exist on initial load, so we need to safely access its value.
-    const searchInput = document.getElementById('filter-input');
-    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
     const list = document.getElementById('data-list');
     list.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
 
     try {
         const response = await fetch(ENTITY_URL);
         const students = await response.json();
-
+        
         let filtered = students;
-        if (isSearch) {
-            filtered = students.filter(s =>
-                s.student_name.toLowerCase().includes(searchTerm) ||
-                s.email.toLowerCase().includes(searchTerm) ||
-                s.gender.toLowerCase().includes(searchTerm)
-            );
+        const filterAttribute = document.getElementById('filter-attribute').value;
+        const filterValue = document.getElementById('filter-input').value.toLowerCase();
+        const filterOperator = document.getElementById('filter-operator').value;
+
+        if (isSearch && filterValue) {
+            filtered = students.filter(s => {
+                if (filterAttribute === 'all') {
+                    // Search across all relevant string-convertible attributes
+                    return String(s.student_id).toLowerCase().includes(filterValue) ||
+                           String(s.student_name).toLowerCase().includes(filterValue) ||
+                           String(s.email).toLowerCase().includes(filterValue) ||
+                           String(s.gender).toLowerCase().includes(filterValue) ||
+                           String(s.hostel_id || '').toLowerCase().includes(filterValue);
+                }
+
+                const itemValue = s[filterAttribute];
+
+                // Handle numeric filters for student_id and hostel_id
+                if (filterAttribute === 'student_id' || filterAttribute === 'hostel_id') {
+                    const numericFilterValue = parseFloat(filterValue);
+                    if (isNaN(numericFilterValue)) return false; // If filter value is not a number, no match
+                    
+                    // Item value can be null (e.g., no hostel), handle it gracefully
+                    const numericItemValue = itemValue !== null ? parseFloat(itemValue) : null;
+                    if (numericItemValue === null) return false;
+
+                    if (filterOperator === 'equals') return numericItemValue === numericFilterValue;
+                    if (filterOperator === 'greater_than') return numericItemValue > numericFilterValue;
+                    if (filterOperator === 'less_than') return numericItemValue < numericFilterValue;
+                }
+                // Handle string-based filters for other attributes
+                return String(itemValue || '').toLowerCase().includes(filterValue);
+            });
         }
 
         list.innerHTML = '';
