@@ -25,7 +25,10 @@ async function populateCourseDropdown() {
 }
 
 async function renderStudents(isSearch = false) {
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    // FIX: Changed 'search-input' to 'filter-input' to match the ID used in the HTML pages.
+    // The search input element might not exist on initial load, so we need to safely access its value.
+    const searchInput = document.getElementById('filter-input');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
     const list = document.getElementById('data-list');
     list.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
 
