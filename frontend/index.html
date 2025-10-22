@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Student Management System</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body class="login-body"> <!-- Apply login-body class initially -->
+
+    <div id="login-section" class="login-container">
+        <div class="login-card">
+            <h2>Admin Login</h2>
+            <form id="login-form">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-content" class="hidden"> <!-- This container will be shown after login -->
+            <aside class="sidebar">
+                <div class="sidebar-header">SMS</div>
+                <ul class="sidebar-nav">
+                    <li><a href="index.html" id="nav-home" class="active"><i class="fa-solid fa-house-chimney fa-fw"></i> Home</a></li>
+                    <li><a href="students.html" id="nav-students"><i class="fa-solid fa-user-graduate fa-fw"></i> Students</a></li>
+                    <li><a href="courses.html" id="nav-courses"><i class="fa-solid fa-book fa-fw"></i> Courses</a></li>
+                    <li><a href="departments.html" id="nav-departments"><i class="fa-solid fa-building-columns fa-fw"></i> Departments</a></li>
+                    <li><a href="instructors.html" id="nav-instructors"><i class="fa-solid fa-chalkboard-user fa-fw"></i> Instructors</a></li>
+                    <li><a href="hostels.html" id="nav-hostels"><i class="fa-solid fa-hotel fa-fw"></i> Hostels</a></li>
+                    <li><a href="enrollments.html" id="nav-enrollments"><i class="fa-solid fa-list-check fa-fw"></i> Enrollments</a></li>
+                <li id="logout-button-li" class="hidden"><a href="#" id="logout-button"><i class="fa-solid fa-right-from-bracket fa-fw"></i> Logout</a></li>
+                </ul>
+            </aside>
+    
+            <main class="page-content">
+                <div class="view-header">
+                    <h2><strong>STUDENT MANAGEMENT SYSTEM</strong></h2>
+                </div>
+                <img src="https://www.sarvika.com/wp-content/uploads/2022/02/Student-Management-System.png" width="1200" height="750" alt="Student Management System Dashboard Illustration">
+            </main>
+    </div>
+
+    <!-- Load scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Instructors - Student Management System</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">SMS</div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html" id="nav-home"><i class="fa-solid fa-house-chimney fa-fw"></i> Home</a></li>
+            <li><a href="students.html" id="nav-students"><i class="fa-solid fa-user-graduate fa-fw"></i> Students</a></li>
+            <li><a href="courses.html" id="nav-courses"><i class="fa-solid fa-book fa-fw"></i> Courses</a></li>
+            <li><a href="departments.html" id="nav-departments"><i class="fa-solid fa-building-columns fa-fw"></i> Departments</a></li>
+            <li><a href="instructors.html" id="nav-instructors" class="active"><i class="fa-solid fa-chalkboard-user fa-fw"></i> Instructors</a></li>
+            <li><a href="hostels.html" id="nav-hostels"><i class="fa-solid fa-hotel fa-fw"></i> Hostels</a></li>
+            <li><a href="enrollments.html" id="nav-enrollments"><i class="fa-solid fa-list-check fa-fw"></i> Enrollments</a></li>
+        </ul>
+    </aside>
+
+    <main class="page-content">
+        <div class="view-header">
+            <h2>Instructors</h2>
+        </div>
+
+        <div class="filter-card">
+            <select id="filter-attribute">
+                <option value="all">Filter by All</option>
+                <option value="instructor_id">Instructor ID</option>
+                <option value="instructor_name">Name</option>
+                <option value="email">Email</option>
+                <option value="phone">Phone</option>
+                <option value="specialization">Specialization</option>
+            </select>
+            <select id="filter-operator" style="display: none;">
+                <option value="equals">Equals</option>
+                <option value="greater_than">Greater Than</option>
+                <option value="less_than">Less Than</option>
+            </select>
+            <input type="text" id="filter-input" placeholder="Enter filter value...">
+            <button class="btn btn-primary" onclick="renderInstructors(true)"><i class="fa-solid fa-filter"></i> Filter</button>
+            <button class="btn btn-secondary" onclick="clearFilters()"><i class="fa-solid fa-times"></i> Clear</button>
+        </div>
+        <button class="btn btn-primary add-button" onclick="openFormForAdd()"><i class="fa-solid fa-plus"></i> Add New Instructor</button>
+
+        <div class="card table-container">
+            <table id="data-table">
+                <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Specialization</th><th>Actions</th></tr></thead>
+                <tbody id="data-list"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="form-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add Instructor</h3>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <form id="data-form">
+                <input type="hidden" id="instructor-id">
+                <label for="instructor-name">Name</label><input type="text" id="instructor-name" required>
+                <label for="instructor-email">Email</label><input type="email" id="instructor-email" required>
+                <label for="instructor-phone">Phone</label><input type="tel" id="instructor-phone">
+                <label for="instructor-specialization">Specialization</label><input type="text" id="instructor-specialization" required>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/instructors.js"></script>
+    <script>
+        function clearFilters() {
+            document.getElementById('filter-attribute').value = 'all';
+            document.getElementById('filter-input').value = '';
+            document.getElementById('filter-operator').value = 'equals';
+            document.getElementById('filter-operator').style.display = 'none'; // Hide operator
+            document.getElementById('filter-input').type = 'text'; // Reset input type
+            document.getElementById('filter-input').placeholder = 'Enter filter value...'; // Reset placeholder
+            renderInstructors(); // Re-render without filters
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('data-form').addEventListener('submit', handleFormSubmit);
+            renderInstructors();
+
+            document.getElementById('filter-attribute').addEventListener('change', function() {
+                const selectedAttribute = this.value;
+                const filterOperator = document.getElementById('filter-operator');
+                if (selectedAttribute === 'instructor_id') {
+                    filterOperator.style.display = 'block';
+                    document.getElementById('filter-input').type = 'number';
+                    document.getElementById('filter-input').placeholder = 'Enter numeric value...';
+                } else {
+                    filterOperator.style.display = 'none';
+                    document.getElementById('filter-input').type = 'text';
+                    document.getElementById('filter-input').placeholder = 'Enter filter value...';
+                }
+            });
+            // Initial call to set up the filter bar state
+            document.getElementById('filter-attribute').dispatchEvent(new Event('change'));
+        });
+    </script>
+</body>
+</html>

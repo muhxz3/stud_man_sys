@@ -1,0 +1,282 @@
+/* --- Professional Design System --- */
+
+/* 1. Root Variables & Resets */
+:root {
+    --primary-dark: #1d3557;
+    --primary-light: #457b9d;
+    --accent-main: #e63946;
+    --accent-secondary: #fca311;
+    --background-main: #ffffff;
+    --background-card: #ffffff;
+    --text-dark: #212529;
+    --text-light: #f8f9fa;
+    --border-color: #dee2e6;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --border-radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: var(--background-main);
+    color: var(--text-dark);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 2. Main Layout (Sidebar + Content) */
+.sidebar {
+    width: 260px;
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 1.5rem 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+}
+
+.sidebar-header {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-nav a:hover { background-color: rgba(255,255,255,0.05); }
+
+.sidebar-nav a.active {
+    background-color: var(--primary-light);
+    border-left-color: var(--accent-secondary);
+}
+
+.page-content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* 3. Page Header & Controls */
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.view-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--primary-dark);
+}
+
+.filter-card {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    gap: 1rem;
+    align-items: center;
+    background-color: var(--background-card);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem; /* Increased margin for better spacing */
+}
+.filter-card select, .filter-card input {
+    margin-bottom: 0; /* Remove default margin-bottom from inputs/selects */
+    flex-grow: 1; /* Allow them to grow and take available space */
+}
+
+.add-button {
+    margin-bottom: 1.5rem;
+    width: fit-content;
+}
+
+/* 4. Cards and Containers */
+.card {
+    background-color: var(--background-card);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+/* 5. Forms & Inputs */
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+input[type="text"], input[type="email"], input[type="date"], input[type="tel"], input[type="number"], select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+}
+.btn-primary:hover { background-color: var(--primary-dark); }
+
+.btn-secondary {
+    background-color: var(--background-card);
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+}
+.btn-secondary:hover { background-color: #f8f9fa; }
+
+.btn-danger {
+    background-color: transparent;
+    color: var(--accent-main);
+    border: 1px solid var(--accent-main);
+}
+.btn-danger:hover {
+    background-color: var(--accent-main);
+    color: var(--text-light);
+}
+
+.btn-edit {
+    background-color: transparent;
+    color: var(--primary-light);
+    border: 1px solid var(--primary-light);
+}
+.btn-edit:hover {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+}
+
+form .btn { margin-right: 0.5rem; }
+
+/* 7. Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+thead {
+    background-color: #f8f9fa;
+    color: var(--primary-dark);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+tbody tr:hover { background-color: rgba(69, 123, 157, 0.05); }
+
+tbody tr:last-child td { border-bottom: none; }
+
+td.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* 8. Modal Styles */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--background-card);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow-md);
+    max-height: 90vh; /* Set a max height relative to the screen */
+    overflow-y: auto; /* Add a scrollbar if the content overflows */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+.modal-header h3 { margin: 0; }
+.close-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* 9. Responsive Adjustments */
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 1rem;
+    }
+    .sidebar-header {
+        border: none;
+        padding: 1rem 0;
+    }
+    .sidebar-nav {
+        display: flex;
+        margin: 0;
+        overflow-x: auto;
+    }
+    .sidebar-nav a {
+        border-left: none;
+        border-bottom: 4px solid transparent;
+    }
+    .sidebar-nav a.active { border-bottom-color: var(--accent-secondary); }
+}
