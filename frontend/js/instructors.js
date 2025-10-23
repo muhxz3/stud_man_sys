@@ -17,16 +17,17 @@ async function renderInstructors(isSearch = false) {
         if (isSearch && filterValue) {
             filtered = instructors.filter(i => {
                 if (filterAttribute === 'all') {
-                    // Search across all relevant string-convertible attributes
-                    return String(i.instructor_id).toLowerCase().includes(filterValue) ||
+                    return String(i.instructor_id || '').toLowerCase().includes(filterValue) || 
                            String(i.instructor_name).toLowerCase().includes(filterValue) ||
                            String(i.email).toLowerCase().includes(filterValue) ||
-                           String(i.phone || '').toLowerCase().includes(filterValue) ||
-                           String(i.specialization || '').toLowerCase().includes(filterValue);
+                           String(i.specialization || '').toLowerCase().includes(filterValue) ||
+                            String(i.phone || '').toLowerCase().includes(filterValue);
                 }
-
+                  if (filterAttribute === 'specialization') {
+                      const itemValue = i[filterAttribute];
+                    return String(itemValue || '').toLowerCase().includes(filterValue);
+                }
                 const itemValue = i[filterAttribute];
-
                 // Handle numeric filters
                 // Only instructor_id is numeric now
                 if (filterAttribute === 'instructor_id') {
@@ -39,8 +40,6 @@ async function renderInstructors(isSearch = false) {
                     if (filterOperator === 'greater_than') return numericItemValue > numericFilterValue;
                     if (filterOperator === 'less_than') return numericItemValue < numericFilterValue;
                 }
-                // Handle string filters (default behavior)
-                return String(itemValue || '').toLowerCase().includes(filterValue);
             });
         }
 
