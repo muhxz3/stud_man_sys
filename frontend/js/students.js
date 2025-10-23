@@ -26,7 +26,7 @@ async function populateCourseDropdown() {
 
 async function renderStudents(isSearch = false) {
     const list = document.getElementById('data-list');
-    list.innerHTML = '<tr><td colspan="6">Loading...</td></tr>';
+    list.innerHTML = '<tr><td colspan="8">Loading...</td></tr>';
 
     try {
         const response = await fetch(ENTITY_URL);
@@ -70,7 +70,7 @@ async function renderStudents(isSearch = false) {
 
         list.innerHTML = '';
         if (filtered.length === 0) {
-            list.innerHTML = `<tr><td colspan="6">${isSearch ? 'No results found.' : 'No students found. Add one!'}</td></tr>`;
+            list.innerHTML = `<tr><td colspan="8">${isSearch ? 'No results found.' : 'No students found. Add one!'}</td></tr>`;
             return;
         }
 
@@ -79,9 +79,11 @@ async function renderStudents(isSearch = false) {
             tr.innerHTML = `
                 <td>${item.student_id}</td>
                 <td>${item.student_name}</td>
+                <td>${item.DOB}</td>
                 <td>${item.email}</td>
                 <td>${item.gender}</td>
-                <td>${item.hostel_id || 'NIL'}</td>
+                <td>${item.phone || 'N/A'}</td>
+                <td>${item.hostel_name || 'NIL'}</td>
                 <td class="actions">
                     <button class="btn btn-edit" onclick='openFormForEdit(${JSON.stringify(item)})'><i class="fa-solid fa-pencil"></i></button>
                     <button class="btn btn-danger" onclick="deleteItem(${item.student_id})"><i class="fa-solid fa-trash"></i></button>
@@ -91,7 +93,7 @@ async function renderStudents(isSearch = false) {
         });
     } catch (error) {
         console.error('Failed to fetch students:', error);
-        list.innerHTML = '<tr><td colspan="6">Error loading data. Is the backend running?</td></tr>';
+        list.innerHTML = '<tr><td colspan="8">Error loading data. Is the backend running?</td></tr>';
     }
 }
 
